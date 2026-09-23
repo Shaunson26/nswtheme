@@ -1,7 +1,7 @@
 # cookbook
 
 This article contains some recipes for different plot styles and how to
-apply waratah styles. Each example shows the base plot then the themed
+apply nswtheme styles. Each example shows the base plot then the themed
 version.
 
 ## Example 1: markdown text
@@ -10,7 +10,7 @@ With standard ggplot output:
 
 ``` r
 
-library(waratah)
+library(nswtheme)
 library(palmerpenguins)
 library(ggplot2)
 library(dplyr)
@@ -52,12 +52,12 @@ p1
 
 ![](cookbook_files/figure-html/unnamed-chunk-2-1.png)
 
-Style with waratah:
+Style with nswtheme:
 
 ``` r
 
 p1 +
-  theme_waratah()
+  theme_nsw()
 #> Warning: Removed 2 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
 ```
@@ -70,7 +70,7 @@ Change to a different NSW palette:
 
 p1 +
   scale_colour_discrete(palette = pal_waratah("qual", var = "aboriginal")) +
-  theme_waratah()
+  theme_nsw()
 #> Warning: Removed 2 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
 ```
@@ -124,13 +124,13 @@ p2 + scale_fill_brewer(palette = "Paired")
 
 ![](cookbook_files/figure-html/unnamed-chunk-5-1.png)
 
-Styling using waratah package - here we want a paired colour palette:
+Styling using nswtheme package - here we want a paired colour palette:
 
 ``` r
 
 p2 +
   discrete_scale("fill", palette = pal_waratah("pairs")) +
-  theme_waratah()
+  theme_nsw()
 ```
 
 ![](cookbook_files/figure-html/unnamed-chunk-6-1.png)
@@ -148,7 +148,7 @@ p2 +
       var = "aboriginal"
     )
   ) +
-  theme_waratah(base_size = 14)
+  theme_nsw(base_size = 14)
 ```
 
 ![](cookbook_files/figure-html/unnamed-chunk-7-1.png)
@@ -176,13 +176,13 @@ p3
 
 ![](cookbook_files/figure-html/unnamed-chunk-8-1.png)
 
-Styling using the waratah package - specifying pallete
+Styling using the nswtheme package - specifying pallete
 
 ``` r
 
 p3 +
   scale_fill_discrete(palette = pal_nsw(hue = "purples")) +
-  theme_waratah(base_size = 14) +
+  theme_nsw(base_size = 14) +
   guides(x = guide_axis(angle = 70)) +
   theme(panel.grid.major.x = element_blank())
 ```
@@ -232,7 +232,7 @@ p4
 
 ![](cookbook_files/figure-html/unnamed-chunk-10-1.png)
 
-Styling using the waratah package with options:
+Styling using the nswtheme package with options:
 
 ``` r
 
@@ -242,7 +242,7 @@ p4 +
     palette = pal_waratah("qual"),
     guide = "none"
   ) +
-  theme_waratah(
+  theme_nsw(
     void = TRUE,
     base_size = 14
   )
@@ -326,9 +326,9 @@ p5 + scale_fill_brewer(palette = "PiYG")
 
 ![](cookbook_files/figure-html/unnamed-chunk-13-1.png)
 
-Styling using the waratah package. Note that the diverging palette is
+Styling using the nswtheme package. Note that the diverging palette is
 continuous, so we need
-[`pal_stretch()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/ggplot_palettes.md)
+[`pal_stretch()`](https://digitalnsw.github.io/nswtheme/reference/ggplot_palettes.md)
 to discretise it here. We specify `"red"` as our starting hue. Without
 `cvd = TRUE` the second colour ends up being green.
 
@@ -340,7 +340,7 @@ p5 +
     palette = pal_waratah("div", "red", cvd = TRUE) |> pal_stretch(),
     breaks = sentiment
   ) +
-  theme_waratah(base_size = 12)
+  theme_nsw(base_size = 12)
 ```
 
 ![](cookbook_files/figure-html/unnamed-chunk-14-1.png)

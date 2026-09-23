@@ -5,8 +5,8 @@ articles:
   articles/charts: charts.html
   cookbook: cookbook.html
   articles/interactive: interactive.html
-  waratah: waratah.html
-last_built: 2026-07-19T23:00Z
+  nswtheme: nswtheme.html
+last_built: 2026-09-23T02:23Z
 urls:
-  reference: https://digitalnsw.github.io/nsw-r-visualisations/reference
-  article: https://digitalnsw.github.io/nsw-r-visualisations/articles
+  reference: https://digitalnsw.github.io/nswtheme/reference
+  article: https://digitalnsw.github.io/nswtheme/articles

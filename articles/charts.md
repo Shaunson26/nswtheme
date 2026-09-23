@@ -3,7 +3,7 @@
 ``` r
 
 set_theme(
-  theme_waratah(variant = "corporate") + theme(legend.position = "bottom")
+  theme_nsw(variant = "corporate") + theme(legend.position = "bottom")
 )
 ```
 
