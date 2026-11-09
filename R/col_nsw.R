@@ -117,6 +117,7 @@ grid_get <- function(name) {
 }
 
 nsw_colour_grids <- rlang::new_environment()
+
 nsw_colour_grids[["base"]] <- new_grid(
   offset = 3L,
   hues = c(
@@ -133,6 +134,7 @@ nsw_colour_grids[["base"]] <- new_grid(
   ),
   tones = c("dark", "normal", "light", "pale")
 )
+
 nsw_colour_grids[["aboriginal"]] <- new_grid(
   offset = 43L,
   hues = c(
@@ -226,10 +228,10 @@ doc_themes <- function() {
 #' col_nsw(h = c("teal", "orange"), t = 1:2, byrow = TRUE)
 #'
 col_nsw <- function(
-  hue,
-  tone,
-  variant = getOption("nswtheme.colour_theme", default = "base"),
-  byrow = FALSE
+    variant = getOption("nswtheme.colour_theme", default = "base"),
+    hue,
+    tone,
+    byrow = FALSE
 ) {
   variant <- match.arg(variant, names(nsw_colour_grids))
   if (missing(hue) && missing(tone)) {

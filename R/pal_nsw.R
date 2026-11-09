@@ -1,7 +1,7 @@
 #' NSW Design System colour palettes
 #'
 #' Palettes created using the [NSW Design System](https://designsystem.nsw.gov.au/docs/content/design/theming.html).
-#' To use the Aboriginal colour grid, specify `variant = "aboriginal"`.
+#' To use the Aboriginal colour grid, specify `variant = "aboriginal"`.\cr\cr
 #' \if{html}{\figure{nsw_palette.svg}{options: width=95%}}
 #' `r svglite::svglite("man/figures/nsw_palette.svg"); display_pal_nsw(); invisible(dev.off())`
 #'
@@ -47,12 +47,14 @@
 #' # you can interpolate colours by converting to a continuous scale
 #' pal_nsw(hue = "blues") |> as_continuous_pal() |> show_col(labels = FALSE)
 pal_nsw <- function(
-  palette = waiver(),
-  hue = NA,
-  tone = NA,
-  variant = getOption("nswtheme.colour_theme", default = "base"),
-  direction = 1
+    palette = waiver(),
+    hue = NA,
+    tone = NA,
+    variant = getOption("nswtheme.colour_theme", default = "base"),
+    direction = 1
 ) {
+
+  # Argument checking ----
   if (all(identical(hue, NA), identical(tone, NA))) {
     if (!missing(variant)) {
       cli::cli_warn(
@@ -62,12 +64,13 @@ pal_nsw <- function(
   }
   if (
     !is_waiver(palette) &&
-      any(!missing(variant), !identical(hue, NA), !identical(tone, NA))
+    any(!missing(variant), !identical(hue, NA), !identical(tone, NA))
   ) {
     cli::cli_warn(
       "{.arg variant}, {.arg hue} and {.arg tone} are ignored when {.arg palette} is specified"
     )
   }
+
 
   if (!identical(hue, NA) && !identical(tone, NA)) {
     colours <- col_nsw(hue = hue, tone = tone, variant = variant)
@@ -98,103 +101,40 @@ pal_nsw_manual <- function(colours) {
   scales::pal_manual(unlist(unname(colours)), type = "colour")
 }
 
-nsw_named_palettes <- rlang::new_environment(list(
-  default = c(
-    nsw_colours$blue_01,
-    nsw_colours$teal_02,
-    nsw_colours$fuchsia_01,
-    nsw_colours$red_02,
-    nsw_colours$orange_02,
-    nsw_colours$yellow_02,
-    nsw_colours$red_03
-  ),
-  brand_default = c(
-    nsw_colours$blue_01,
-    nsw_colours$blue_04,
-    nsw_colours$blue_02,
-    nsw_colours$red_02
-  ),
-  core = c(
-    nsw_colours$blue_01,
-    nsw_colours$red_02
-  )
-))
+nsw_named_palettes <-
+  rlang::new_environment(
+    list(
+      default = c(
+        nsw_colours$blue_01,
+        nsw_colours$red_02,
+        nsw_colours$blue_04,
+        nsw_colours$red_04,
+        nsw_colours$blue_02,
+        nsw_colours$teal_02,
+        nsw_colours$fuchsia_01,
+        nsw_colours$orange_02,
+        nsw_colours$yellow_02,
+        nsw_colours$red_03
+        # nsw_colours$blue_01,
+        # nsw_colours$red_02,
+        # nsw_colours$teal_02,
+        # nsw_colours$fuchsia_01,
+        # nsw_colours$orange_02,
+        # nsw_colours$yellow_02,
+        # nsw_colours$red_03
+      ),
+      brand_default = c(
+        nsw_colours$blue_01,
+        nsw_colours$red_02,
+        nsw_colours$blue_04,
+        nsw_colours$blue_02
 
-display_pal_nsw <- function() {
-  pals <- c(
-    rev(names(nsw_named_palettes)),
-    " ",
-    " v=base",
-    paste0("h=", colnames(nsw_colour_grids$base)),
-    paste0("t=", rownames(nsw_colour_grids$base)),
-    " ",
-    " v=aboriginal",
-    paste0("h=", colnames(nsw_colour_grids$aboriginal)),
-    paste0("t=", rownames(nsw_colour_grids$aboriginal))
-  )
-  cols <- unname(c(
-    rev(as.list(nsw_named_palettes)),
-    NA,
-    NA,
-    Map(
-      \(x) unname(unlist(col_nsw(hue = x, variant = "base"))),
-      colnames(nsw_colour_grids$base)
-    ),
-    Map(
-      \(x) unname(unlist(col_nsw(tone = x, variant = "base"))),
-      rownames(nsw_colour_grids$base)
-    ),
-    NA,
-    NA,
-    Map(
-      \(x) unname(unlist(col_nsw(hue = x, variant = "aboriginal"))),
-      colnames(nsw_colour_grids$aboriginal)
-    ),
-    Map(
-      \(x) unname(unlist(col_nsw(tone = x, variant = "aboriginal"))),
-      rownames(nsw_colour_grids$aboriginal)
+      ),
+      core = c(
+        nsw_colours$blue_01,
+        nsw_colours$red_02
+      )
     )
-  ))
-
-  n <- lengths(cols)
-  nr <- length(pals)
-  nc <- max(n)
-
-  ylim <- c(0, nr)
-  oldpar <- graphics::par(mgp = c(0, 0, 0), mar = c(0, 4, 0, 0))
-  on.exit(graphics::par(oldpar))
-  plot(
-    1,
-    1,
-    xlim = c(0, nc),
-    ylim = ylim,
-    type = "n",
-    axes = FALSE,
-    bty = "n",
-    xlab = "",
-    ylab = ""
   )
-  for (i in 1:nr) {
-    nj <- n[[i]]
-    if (startsWith(pals[[i]], " ")) {
-      next
-    }
-    shadi <- cols[[i]]
-    graphics::rect(
-      xleft = 0:(nj - 1),
-      ytop = nr - i,
-      xright = 1:nj,
-      ybottom = nr - i + 0.8,
-      col = shadi,
-      border = "light grey"
-    )
-  }
-  graphics::text(
-    rep(-0.1, nr),
-    rev(1:nr) - 0.6,
-    labels = pals,
-    xpd = TRUE,
-    adj = 1,
-    cex = 0.7
-  )
-}
+
+

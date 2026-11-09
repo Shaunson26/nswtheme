@@ -11,16 +11,21 @@ export(pal_nsw_manual)
 export(pal_stretch)
 export(pal_waratah)
 export(reactable_nswtheme)
+export(scale_color_nsw)
+export(scale_colour_nsw)
+export(scale_fill_nsw)
 export(theme_nsw)
 export(tooltip_css)
-importFrom(ggplot2,"%+replace%")
-importFrom(ggplot2,element_blank)
-importFrom(ggplot2,element_geom)
-importFrom(ggplot2,element_line)
-importFrom(ggplot2,element_rect)
-importFrom(ggplot2,element_text)
-importFrom(ggplot2,is_waiver)
-importFrom(ggplot2,rel)
-importFrom(ggplot2,theme)
-importFrom(ggplot2,waiver)
+importFrom(ggplot2,
+  "%+replace%",
+  element_blank,
+  element_geom,
+  element_line,
+  element_rect,
+  element_text,
+  is_waiver,
+  rel,
+  theme,
+  waiver
+)
 importFrom(scales,as_continuous_pal)

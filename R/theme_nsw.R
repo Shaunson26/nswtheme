@@ -48,15 +48,30 @@ theme_nsw <- function(
   paper = "white",
   geom_ink = "blue_01",
   accent = "blue_02",
-  variant = getOption("nswtheme.colour_theme", default = "base"),
+  palette = getOption("nswtheme.colour_theme", default = "default"),
+  #variant = getOption("nswtheme.colour_theme", default = "base"),
   show_grid_lines = TRUE,
   void = FALSE
 ) {
+
+  # NSW theme picker .. example
+  col_fns <-
+    list(
+      default = pal_nsw(palette = 'default'),
+      aboriginal = pal_nsw(variant = 'aboriginal', tone = 'normal'),
+      treasury = pal_nsw(variant = 'treasury', tone = 'normal')
+    )
+
+  col_fn <- col_fns[[palette]]
+
   # support using NSW colour names
   ink <- resolve_colours(ink)
   geom_ink <- resolve_colours(geom_ink)
+  geom_ink <- resolve_colours(col_fn(1))
   paper <- resolve_colours(paper)
   accent <- resolve_colours(accent)
+
+
 
   new_theme <-
     ggplot2::theme_minimal(
@@ -138,10 +153,10 @@ theme_nsw <- function(
         fill = geom_ink,
         pointsize = 2,
       ),
-      palette.colour.discrete = pal_waratah(type = "qual", variant = variant),
-      palette.fill.discrete = pal_waratah(type = "qual", variant = variant),
-      palette.colour.continuous = pal_waratah(type = "seq", variant = variant),
-      palette.fill.continuous = pal_waratah(type = "seq", variant = variant),
+      palette.colour.discrete = col_fn,
+      palette.fill.discrete = col_fn,
+      palette.colour.continuous = col_fn,
+      palette.fill.continuous = col_fn,
       complete = TRUE
     )
 

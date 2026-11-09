@@ -1,0 +1,150 @@
+---
+title: "developer-notes"
+output: rmarkdown::html_vignette
+vignette: >
+%\VignetteIndexEntry{developer-notes}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+  editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+An attempt to describe the state of the package, and to use what is there for providing
+wrapper functions for ease of use ...
+
+```{r setup}
+library(nswtheme)
+```
+
+## Core colour palettes
+
+- `col_nsw.R` has the **reference colour vector** and generates the "colour 
+environment" `nsw_colour_grids` with named colour grids. These colour grids a referenced
+by row and column to give a colour vector.
+
+- `pal_nsw.R` generates the colour environment `nsw_named_palettes`, with each
+named element a colour vector
+
+```{r}
+names(nsw_colour_grids)
+nsw_colour_grids$base
+nsw_colour_grids$aboriginal
+nsw_colour_grids$corporate
+nsw_colour_grids$treasury
+```
+
+```{r}
+names(nsw_named_palettes)
+nsw_named_palettes$default
+nsw_named_palettes$core
+```
+
+`utils-display_pal_nsw.R` provides the function `display_pal_nsw()` to display features
+described above
+
+```{r}
+display_pal_nsw()
+```
+
+`col_nsw()` picks colours from `nsw_colour_grids` and produces a vector
+
+```{r}
+col_nsw(variant = 'base', tone = 'normal')
+col_nsw(variant = 'aboriginal', tone = 'normal')
+```
+
+`pal_nsw()` generates a colour function from all of the above (with the maximum
+number of available colour being the length of the colour vector (core = 2 colours).
+You must distinguish between **palette** and **variant** - TODO!
+
+```{r}
+# pal_nsw -> get(palette, envir = nsw_named_palettes)
+
+pal_nsw(palette = 'core')(2) # same as nsw_named_palettes$core
+pal_nsw(variant = 'base', tone = 'normal')(10) # same as col_nsw(variant = 'base', tone = 'normal')
+```
+
+> ggplot2 often takes in colour functions .. therefore use pal_nsw
+
+
+nsw_theme() is a `ggplot2` theme with these colour defaults:
+
+```
+theme(
+  ...
+  palette.colour.discrete = pal_nsw('default'),
+  palette.fill.discrete = pal_nsw('default'),
+  palette.colour.continuous = pal_nsw('default'),
+  palette.fill.continuous = pal_nsw('default'),
+  ...
+  )
+```
+
+```{r}
+pal_nsw(variant = 'base')
+pal_nsw('default')(8)
+
+```
+
+all good until a beginner need use .. so some wrappers for scale_nsw_* defaults
+
+```
+scale_fill_nsw default
+scale_fill_nsw aborignal etc
+```
+
+```{r}
+library(ggplot2)
+
+df <-
+  data.frame(
+    x = letters[1:4],
+    y = rpois(4, 4)
+  ) 
+
+# This sets default colour + scales
+set_theme(theme_nsw())
+
+df |> 
+  ggplot(aes(x = x, y = y)) +
+  geom_col() 
+
+df |> 
+  ggplot(aes(x = x, y = y, fill = x)) +
+  geom_col() 
+
+# Shaun: Added
+set_theme(theme_nsw(palette = 'treasury'))
+
+df |> 
+  ggplot(aes(x = x, y = y)) +
+  geom_col()
+
+df |> 
+  ggplot(aes(x = x, y = y, fill = x)) +
+  geom_col() 
+
+# If you dont set themes
+set_theme()
+
+df |> 
+  ggplot(aes(x = x, y = y)) +
+  geom_col(fill = pal_nsw(variant = 'treasury', tone = 'normal')(1))
+
+df |> 
+  ggplot(aes(x = x, y = y, fill = x)) +
+  geom_col() +
+  scale_fill_treasury()
+
+
+```
+
+
+

@@ -38,7 +38,7 @@ A palette object (see \link[scales:new_continuous_palette]{palette constructors}
 }
 \description{
 Palettes created using the \href{https://designsystem.nsw.gov.au/docs/content/design/theming.html}{NSW Design System}.
-To use the Aboriginal colour grid, specify \code{variant = "aboriginal"}.
+To use the Aboriginal colour grid, specify \code{variant = "aboriginal"}.\cr\cr
 \if{html}{\figure{nsw_palette.svg}{options: width=95\%}}
 }
 \details{
@@ -94,7 +94,7 @@ pal_nsw(hue = "blues") |> as_continuous_pal() |> show_col(labels = FALSE)
 \seealso{
 \code{\link[=col_nsw]{col_nsw()}}
 
-Other palettes: 
-\code{\link{pal_waratah}()}
+Other palettes:
+\code{\link[=pal_waratah]{pal_waratah()}}
 }
 \concept{palettes}

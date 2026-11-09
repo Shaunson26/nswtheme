@@ -38,7 +38,9 @@ pak::pak('digitalnsw/nswtheme')
 ```
 
 ## Usage
-In many instances it may be sufficient to set the global theme:
+
+In many instances it may be sufficient to set the global theme using `theme_nsw()`
+which will set a default NSW Government theme for `ggplot2` visualisations
 
 ```{r}
 library(ggplot2)
@@ -46,9 +48,22 @@ library(nswtheme)
 
 set_theme(theme_nsw())
 
-ggplot(mpg, aes(displ, hwy, colour = class)) +
-  geom_point()
+# default blue + styling
+ggplot(mpg, aes(x = hwy)) +
+  geom_histogram()
+
+ggplot(mpg, aes(x = hwy, fill = factor(cyl))) +
+  geom_histogram()
 ```
 
 More control is available through palette functions such as `pal_waratah()`.
 See `vignette("nswtheme")` for usage guidelines.
+
+# Notes
+
+Convention A: The modern scales / tidyverse convention (recommended)
+In recent versions of scales (v1.3.0+), the tidyverse standardized on functional prefixes:
+
+  - `scale_*()`: ggplot2 scale layers (scale_colour_nsw(), scale_fill_nsw())
+  - `pal_*()`: Palette generator functions returning a closure (pal_nsw(), pal_waratah(), pal_manual())
+  - `col_*()`: Direct color lookup and manipulation (col_nsw(), col_distinct())
